@@ -9,31 +9,33 @@ class MemePlayer extends StatelessWidget {
 
   //populate the app with more tracks
   List<String> memeTracks = [
-    'Kama_hakuna.wav',
-    'Iriz war iriz.wav',
-    'Bure kabisa.wav',
-    'Keep walking.wav',
-    'Tununulie shai.wav',
-    'That won\'t happen.wav',
-    'Niko pekee yangu.wav',
+    'Kama_hakuna',
+    'Iriz war iriz',
+    'Bure kabisa',
+    'Keep walking',
+    'Tununulie shai',
+    'That won\'t happen',
+    'Niko pekee yangu',
   ];
 
   //explicit meme player function
   void memePlayer(int trackNumber) {
     final playMeme = AudioCache();
     //Add meme and text
-    playMeme.play(memeTracks.elementAt(trackNumber));
+    playMeme.play(memeTracks.elementAt(trackNumber) + '.wav');
   }
 
   //explicit function to populate UI accordingly
-  Expanded buildButtons(Color color, int trackNumber) {
+  Expanded buildButtons(int trackNumber) {
     return Expanded(
       child: OutlinedButton(
-        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(color)),
+        // style: ButtonStyle(backgroundColor: MaterialStateProperty.all(color)),
         child: Text(
           memeTracks.elementAt(trackNumber),
           style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+              color: Colors.deepPurple,
+              fontWeight: FontWeight.bold,
+              fontSize: 20),
         ),
         onPressed: () {
           memePlayer(trackNumber);
@@ -45,6 +47,7 @@ class MemePlayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -57,13 +60,13 @@ class MemePlayer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 //build UI
-                buildButtons(Colors.red, 0),
-                buildButtons(Colors.orange, 1),
-                buildButtons(Colors.yellow, 2),
-                buildButtons(Colors.green, 3),
-                buildButtons(Colors.blue, 4),
-                buildButtons(Colors.indigo, 5),
-                buildButtons(Colors.deepPurple, 6),
+                buildButtons(0),
+                buildButtons(1),
+                buildButtons(2),
+                buildButtons(3),
+                buildButtons(4),
+                buildButtons(5),
+                buildButtons(6),
               ],
             ),
           ),
