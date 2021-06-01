@@ -34,19 +34,22 @@ class _MemePlayerState extends State<MemePlayer> {
   void stopMeme() {
     audioPlayer.stop();
   }
+  //change UI components from buttons to list elements
 
-  Expanded buildButtons(int trackNumber) {
-    return Expanded(
-      child: OutlinedButton(
+  Card buildButtons(int trackNumber) {
+    return Card(
+      child: ListTile(
         // style: ButtonStyle(backgroundColor: MaterialStateProperty.all(color)),
-        child: Text(
+        leading: Icon(Icons.music_note_rounded,
+        color: Colors.deepPurple,),
+        title: Text(
           memeTracks.elementAt(trackNumber),
           style: TextStyle(
               color: Colors.deepPurple,
               fontWeight: FontWeight.bold,
               fontSize: 20),
         ),
-        onPressed: () {
+        onTap: () {
           setState(() {
             //check if the audio player instance is null, if so play the track, otherwise stop it
             audioPlayer != null ? playMeme(trackNumber) : stopMeme();
@@ -83,7 +86,13 @@ class _MemePlayerState extends State<MemePlayer> {
           //   ),
           // ),
           children: [
-            
+            buildButtons(0),
+            buildButtons(1),
+            buildButtons(2),
+            buildButtons(3),
+            buildButtons(4),
+            buildButtons(5),
+            buildButtons(6),
           ],
         ),
       ),
