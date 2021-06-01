@@ -1,13 +1,17 @@
-import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MemePlayer());
 
-class MemePlayer extends StatelessWidget {
+class MemePlayer extends StatefulWidget {
   //track number integer variable to follow up a meme's track position in the list
+  @override
+  _MemePlayerState createState() => _MemePlayerState();
+}
+
+class _MemePlayerState extends State<MemePlayer> {
   int trackNumber = 0;
 
-  //populate the app with more tracks
   List<String> memeTracks = [
     'Kama_hakuna',
     'Iriz war iriz',
@@ -18,14 +22,18 @@ class MemePlayer extends StatelessWidget {
     'Niko pekee yangu',
   ];
 
-  //explicit meme player function
-  void memePlayer(int trackNumber) {
-    final playMeme = AudioCache();
+  bool memePlay(int trackNumber) {
+    final playMeme = AudioPlayer();
     //Add meme and text
     playMeme.play(memeTracks.elementAt(trackNumber) + '.wav');
+    return true;
   }
 
-  //explicit function to populate UI accordingly
+  void memeStop(int trackNumber) {
+    final stopMeme = AudioPlayer();
+    stopMeme.stop();
+  }
+
   Expanded buildButtons(int trackNumber) {
     return Expanded(
       child: OutlinedButton(
@@ -38,7 +46,11 @@ class MemePlayer extends StatelessWidget {
               fontSize: 20),
         ),
         onPressed: () {
-          memePlayer(trackNumber);
+          setState(() {
+          memePlay(trackNumber) == false
+              ? memePlay(trackNumber)
+              : memeStop(trackNumber);  
+          });
         },
       ),
     );
