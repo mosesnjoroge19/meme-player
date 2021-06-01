@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audio_cache.dart';
 
 void main() => runApp(MemePlayer());
 
@@ -8,9 +9,10 @@ class MemePlayer extends StatefulWidget {
   @override
   _MemePlayerState createState() => _MemePlayerState();
 }
-
 class _MemePlayerState extends State<MemePlayer> {
   int trackNumber = 0;
+  //instantiate an audio player variable
+  final audioPlayer = AudioPlayer();
 
   List<String> memeTracks = [
     'Kama_hakuna',
@@ -22,21 +24,20 @@ class _MemePlayerState extends State<MemePlayer> {
     'Niko pekee yangu',
   ];
 
-  bool memePlay(int trackNumber) {
-    final playMeme = AudioPlayer();
+  void playMeme(int trackNumber) {
+    final memePlayer = AudioCache(fixedPlayer: audioPlayer);
     //Add meme and text
-    playMeme.play(memeTracks.elementAt(trackNumber) + '.wav');
-    return true;
+    memePlayer.play(memeTracks.elementAt(trackNumber) + '.wav');
+    
   }
 
-  void memeStop(int trackNumber) {
-    final stopMeme = AudioPlayer();
-    stopMeme.stop();
+  void stopMeme(){
+    audioPlayer.stop();
   }
 
   Expanded buildButtons(int trackNumber) {
     return Expanded(
-      child: OutlinedButton(
+      child: InkWell(
         // style: ButtonStyle(backgroundColor: MaterialStateProperty.all(color)),
         child: Text(
           memeTracks.elementAt(trackNumber),
@@ -45,11 +46,11 @@ class _MemePlayerState extends State<MemePlayer> {
               fontWeight: FontWeight.bold,
               fontSize: 20),
         ),
-        onPressed: () {
+        onTap: () {
           setState(() {
-          memePlay(trackNumber) == false
-              ? memePlay(trackNumber)
-              : memeStop(trackNumber);  
+            //check if the audio player instance is null, if so play the track, otherwise stop it
+            audioPlayer != null ? playMeme(trackNumber):stopMeme();
+            
           });
         },
       ),
