@@ -9,6 +9,7 @@ class MemePlayer extends StatefulWidget {
   @override
   _MemePlayerState createState() => _MemePlayerState();
 }
+
 class _MemePlayerState extends State<MemePlayer> {
   int trackNumber = 0;
   //instantiate an audio player variable
@@ -28,16 +29,15 @@ class _MemePlayerState extends State<MemePlayer> {
     final memePlayer = AudioCache(fixedPlayer: audioPlayer);
     //Add meme and text
     memePlayer.play(memeTracks.elementAt(trackNumber) + '.wav');
-    
   }
 
-  void stopMeme(){
+  void stopMeme() {
     audioPlayer.stop();
   }
 
   Expanded buildButtons(int trackNumber) {
     return Expanded(
-      child: InkWell(
+      child: OutlinedButton(
         // style: ButtonStyle(backgroundColor: MaterialStateProperty.all(color)),
         child: Text(
           memeTracks.elementAt(trackNumber),
@@ -46,11 +46,10 @@ class _MemePlayerState extends State<MemePlayer> {
               fontWeight: FontWeight.bold,
               fontSize: 20),
         ),
-        onTap: () {
+        onPressed: () {
           setState(() {
             //check if the audio player instance is null, if so play the track, otherwise stop it
-            audioPlayer != null ? playMeme(trackNumber):stopMeme();
-            
+            audioPlayer != null ? playMeme(trackNumber) : stopMeme();
           });
         },
       ),
@@ -67,22 +66,25 @@ class _MemePlayerState extends State<MemePlayer> {
           title: Text('Meme Player'),
           backgroundColor: Colors.deepPurple,
         ),
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                //build UI
-                buildButtons(0),
-                buildButtons(1),
-                buildButtons(2),
-                buildButtons(3),
-                buildButtons(4),
-                buildButtons(5),
-                buildButtons(6),
-              ],
-            ),
-          ),
+        body: ListView(
+          // child: Center(
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //     children: [
+          //       //build UI
+          //       buildButtons(0),
+          //       buildButtons(1),
+          //       buildButtons(2),
+          //       buildButtons(3),
+          //       buildButtons(4),
+          //       buildButtons(5),
+          //       buildButtons(6),
+          //     ],
+          //   ),
+          // ),
+          children: [
+            
+          ],
         ),
       ),
     );
